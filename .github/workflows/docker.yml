@@ -53,6 +53,8 @@ jobs:
         ignore-unfixed: true
         vuln-type: 'os,library'
         severity: 'CRITICAL,HIGH'
+        scan-type: image
+
 
     - name: Trivy FS Scan (source & Dockerfile)
       uses: aquasecurity/trivy-action@master
