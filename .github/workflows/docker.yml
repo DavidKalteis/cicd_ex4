@@ -18,12 +18,13 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-    - name: Build Docker image
+    - name: Build Docker images
       run: |
-        IMAGE_NAME=${{ secrets.DOCKERHUB_USERNAME }}/myhello:${{ github.sha }}
-        docker build -t $IMAGE_NAME .
-    
-    - name: Push Docker image
+        IMAGE_BASE=${{ secrets.DOCKERHUB_USERNAME }}/myhello
+        docker build -t $IMAGE_BASE:latest -t $IMAGE_BASE:${{ github.sha }} .
+
+    - name: Push Docker images
       run: |
-        IMAGE_NAME=${{ secrets.DOCKERHUB_USERNAME }}/myhello:${{ github.sha }}
-        docker push $IMAGE_NAME
+        IMAGE_BASE=${{ secrets.DOCKERHUB_USERNAME }}/myhello
+        docker push $IMAGE_BASE:latest
+        docker push $IMAGE_BASE:${{ github.sha }}
